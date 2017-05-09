@@ -42,9 +42,9 @@ public class WarehouseController {
     public ResponseEntity<WarehouseItemForm> getItemById(@PathVariable("id") Long itemId) {
             WarehouseItemForm retrievedItem = warehouseItemService.retrieveItem(itemId);
             if(retrievedItem.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new WarehouseItemForm(), HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(warehouseItemService.retrieveItem(itemId), HttpStatus.FOUND);
+            return new ResponseEntity<>(retrievedItem, HttpStatus.FOUND);
     }
 
         @RequestMapping(path = "/items/{id}", method = RequestMethod.DELETE)
@@ -57,7 +57,7 @@ public class WarehouseController {
     }
 
         @RequestMapping(path = "/items/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ItemStateInWarehouse> updateItem(@PathVariable("id") Long itemId, WarehouseItemForm itemForm,HttpServletResponse response) {
+    public ResponseEntity<ItemStateInWarehouse> updateItem(@PathVariable("id") Long itemId, @RequestBody @Valid WarehouseItemForm itemForm,HttpServletResponse response) {
             if (warehouseItemService.updateItem(itemId, itemForm)) {
                 response.setHeader("Item", "/shop/items");
                 return new ResponseEntity<>(ItemStateInWarehouse.ITEM_UPDATED, HttpStatus.ACCEPTED);

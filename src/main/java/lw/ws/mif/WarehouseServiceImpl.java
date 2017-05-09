@@ -23,7 +23,9 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
         WarehouseItemEntity entity = new WarehouseItemEntity();
         entity.setItemName(itemForm.getItemName());
         entity.setQuantity(itemForm.getQuantity());
-        entity.setWarehouseAddress(itemForm.getWarehouseAddress());
+        entity.setCity(itemForm.getCity());
+        entity.setStreet(itemForm.getStreet());
+        entity.setNumber(itemForm.getNumber());
         try {
             warehouseRepository.save(entity);
             return true;
@@ -68,7 +70,9 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
             WarehouseItemEntity updateItem = warehouseItemEntity.get();
             updateItem.setItemName(updatableForm.getItemName());
             updateItem.setQuantity(updatableForm.getQuantity());
-            updateItem.setWarehouseAddress(updatableForm.getWarehouseAddress());
+            updateItem.setCity(updatableForm.getCity());
+            updateItem.setStreet(updatableForm.getStreet());
+            updateItem.setNumber(updatableForm.getNumber());
             try {
                 warehouseRepository.save(updateItem);
                 return true;
@@ -93,11 +97,17 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
         if (itemForm.getItemName() == null) {
             itemForm.setItemName(warehouseItemEntity.get().getItemName());
         }
-        if (itemForm.getQuantity() > 0) {
+        if (itemForm.getQuantity() < 0) {
             itemForm.setQuantity(warehouseItemEntity.get().getQuantity());
         }
-        if (itemForm.getWarehouseAddress() == null) {
-            itemForm.setWarehouseAddress(warehouseItemEntity.get().getWarehouseAddress());
+        if (itemForm.getCity() == null) {
+            itemForm.setCity(warehouseItemEntity.get().getCity());
+        }
+        if (itemForm.getStreet() == null) {
+            itemForm.setNumber(warehouseItemEntity.get().getStreet());
+        }
+        if (itemForm.getNumber() == null) {
+            itemForm.setNumber(warehouseItemEntity.get().getNumber());
         }
         return itemForm;
     }

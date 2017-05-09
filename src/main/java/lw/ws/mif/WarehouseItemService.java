@@ -1,7 +1,5 @@
 package lw.ws.mif;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -9,8 +7,12 @@ import java.util.List;
  */
 public interface WarehouseItemService {
     boolean saveItem(WarehouseItemForm itemForm);
+
     List<WarehouseItemForm> retrieveAllItems();
+
     WarehouseItemForm retrieveItem(Long itemId);
+
     boolean deleteItem(Long itemId);
+
     boolean updateItem(Long itemId, WarehouseItemForm itemForm);
 }

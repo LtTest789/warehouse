@@ -16,8 +16,14 @@ public class WarehouseItemEntity {
     @Column(name = "item_name", nullable = false)
     private String itemName;
 
-    @Column(name = "warehouse_address")
-    private String warehouseAddress;
+    @Column(name = "warehouse_city")
+    private String city;
+
+    @Column(name = "warehouse_street")
+    private String street;
+
+    @Column(name = "warehouse_number")
+    private String number;
 
     @Column(name = "quantity")
     private int quantity;
@@ -25,16 +31,20 @@ public class WarehouseItemEntity {
     public WarehouseItemEntity() {
     }
 
-    public WarehouseItemEntity(String itemName, String warehouseAddress, int quantity) {
+    public WarehouseItemEntity(String itemName, String city, String street, String number, int quantity) {
         this.itemName = itemName;
-        this.warehouseAddress = warehouseAddress;
+        this.city = city;
+        this.street = street;
+        this.number = number;
         this.quantity = quantity;
     }
 
     public WarehouseItemEntity(WarehouseItemEntity item) {
-        this.itemName = item.getItemName();
-        this.warehouseAddress = item.getWarehouseAddress();
-        this.quantity = item.getQuantity();
+        this.itemName = item.itemName;
+        this.city = item.city;
+        this.street = item.street;
+        this.number = item.number;
+        this.quantity = item.quantity;
     }
 
     public long getId() {
@@ -53,12 +63,28 @@ public class WarehouseItemEntity {
         this.itemName = itemName;
     }
 
-    public String getWarehouseAddress() {
-        return warehouseAddress;
+    public String getCity() {
+        return city;
     }
 
-    public void setWarehouseAddress(String warehouseAddress) {
-        this.warehouseAddress = warehouseAddress;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public int getQuantity() {
