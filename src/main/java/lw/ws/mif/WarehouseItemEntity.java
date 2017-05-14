@@ -1,6 +1,8 @@
 package lw.ws.mif;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Romas on 5/2/2017.
@@ -13,9 +15,6 @@ public class WarehouseItemEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "item_name", nullable = false)
-    private String itemName;
-
     @Column(name = "warehouse_city")
     private String city;
 
@@ -25,26 +24,23 @@ public class WarehouseItemEntity {
     @Column(name = "warehouse_number")
     private String number;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name= "warehouse_id")
+    private List<ItemForm> itemForms;
 
     public WarehouseItemEntity() {
     }
 
-    public WarehouseItemEntity(String itemName, String city, String street, String number, int quantity) {
-        this.itemName = itemName;
+    public WarehouseItemEntity(String city, String street, String number) {
         this.city = city;
         this.street = street;
         this.number = number;
-        this.quantity = quantity;
     }
 
     public WarehouseItemEntity(WarehouseItemEntity item) {
-        this.itemName = item.itemName;
         this.city = item.city;
         this.street = item.street;
         this.number = item.number;
-        this.quantity = item.quantity;
     }
 
     public long getId() {
@@ -53,14 +49,6 @@ public class WarehouseItemEntity {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public String getCity() {
@@ -87,11 +75,11 @@ public class WarehouseItemEntity {
         this.number = number;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public List<ItemForm> getItemForms() {
+        return itemForms;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setItemForms(List<ItemForm> itemForms) {
+        this.itemForms = itemForms;
     }
 }

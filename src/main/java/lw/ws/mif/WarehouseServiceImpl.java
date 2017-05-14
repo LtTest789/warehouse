@@ -16,18 +16,22 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
     private Optional<WarehouseItemEntity> warehouseItemEntity;
     @Autowired
     private WarehouseRepository warehouseRepository;
+    @Autowired
+    private WarehouseItemRepository warehouseItemRepository;
 
     @Override
     public boolean saveItem(WarehouseItemForm itemForm) {
 
         WarehouseItemEntity entity = new WarehouseItemEntity();
-        entity.setItemName(itemForm.getItemName());
-        entity.setQuantity(itemForm.getQuantity());
         entity.setCity(itemForm.getCity());
         entity.setStreet(itemForm.getStreet());
         entity.setNumber(itemForm.getNumber());
         try {
-            warehouseRepository.save(entity);
+            WarehouseItemEntity entityW = warehouseRepository.save(entity);
+            for (ItemForm i :itemForm.getItemFormList()) {
+                i.setWarehouseId(entityW.getId());
+                warehouseItemRepository.save(i);
+            }
             return true;
         } catch (Exception e) {
             return false;
@@ -68,11 +72,10 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
         if (itemExist(itemId)) {
             WarehouseItemForm updatableForm = checkForNulls(itemForm);
             WarehouseItemEntity updateItem = warehouseItemEntity.get();
-            updateItem.setItemName(updatableForm.getItemName());
-            updateItem.setQuantity(updatableForm.getQuantity());
             updateItem.setCity(updatableForm.getCity());
             updateItem.setStreet(updatableForm.getStreet());
             updateItem.setNumber(updatableForm.getNumber());
+            updateItem.setItemForms(itemForm.getItemFormList());
             try {
                 warehouseRepository.save(updateItem);
                 return true;
@@ -94,12 +97,6 @@ public class WarehouseServiceImpl implements  WarehouseItemService{
     }
 
     public WarehouseItemForm checkForNulls(WarehouseItemForm itemForm) {
-        if (itemForm.getItemName() == null) {
-            itemForm.setItemName(warehouseItemEntity.get().getItemName());
-        }
-        if (itemForm.getQuantity() < 0) {
-            itemForm.setQuantity(warehouseItemEntity.get().getQuantity());
-        }
         if (itemForm.getCity() == null) {
             itemForm.setCity(warehouseItemEntity.get().getCity());
         }

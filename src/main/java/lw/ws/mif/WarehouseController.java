@@ -25,7 +25,6 @@ public class WarehouseController {
 
     @RequestMapping(path = "/items", method = RequestMethod.POST)
     public ResponseEntity<ItemStateInWarehouse> addItem(@RequestBody @Valid WarehouseItemForm warehouseItemForm, HttpServletResponse response) {
-     warehouseItemService.saveItem(warehouseItemForm);
         if (warehouseItemService.saveItem(warehouseItemForm)) {
             response.setHeader("Item", "/warehouse/items");
             return new ResponseEntity(ItemStateInWarehouse.ITEM_ADDED_TO_WAREHOUSE, HttpStatus.CREATED);
